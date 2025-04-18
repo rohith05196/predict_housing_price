@@ -2,8 +2,6 @@ import pickle
 from flask import Flask, request, app, jsonify, render_template
 import pandas as pd
 import numpy as np
-import sklearn
-
 
 app = Flask(__name__)
 

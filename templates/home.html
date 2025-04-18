@@ -1,59 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radhikas World</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: rgb(255, 255, 255);
-            text-align: center;
-            background: url("{{ url_for('static', filename='images/fig.jpeg') }}") no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .content {
-            background-color: rgba(7, 7, 7, 0.5);
-            padding: 40px;
-            border-radius: 15px;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2em;
-            max-width: 600px;
-        }
-        .button {
-            margin-top: 20px;
-            padding: 12px 25px;
-            background-color: #fc0707;
-            border: none;
-            border-radius: 25px;
-            color: white;
-            font-size: 1em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-        .button:hover {
-            background-color: #feb47b;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radhika's World - Quick Prediction</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      text-align: center;
+      background: url("{{ url_for('static', filename='images/fig.jpeg') }}") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .content {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-in;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #ffcbcb;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+      width: 100%;
+    }
+    input[type="number"] {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .button {
+      margin-top: 25px;
+      padding: 14px;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.4s ease;
+    }
+    .button:hover {
+      background: linear-gradient(to right, #feb47b, #ff7e5f);
+      transform: scale(1.05);
+    }
+    .prediction-card {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      animation: fadeIn 1.5s ease-in;
+    }
+    .prediction-card h2 {
+      font-size: 1.8em;
+      color: #ffffff;
+      margin: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
 </head>
+
 <body>
-    <div class="content">
-        <h1>Welcome to Radhika's World</h1>
-        <p>Find your perfect home with us — luxury, comfort, and beauty combined in every corner. Let's build your future together!</p>
-        <a href="#" class="button">Explore Now</a>
+  <div class="content">
+    <h1>Quick Home Value Prediction for Bostonn based on how safe the location is and how old the house is</h1>
+    <form action="/predict_api" method="post">
+      <!-- Visible inputs -->
+      <input type="number" step="any" name="CRIM" placeholder="Crime Rate (CRIM, eg: 0.04) " required>
+      <input type="hidden" name="ZN" value="19">
+      <input type="hidden" name="INDUS" value="2.31">
+      <input type="hidden" name="CHAS" value="0.0">
+      <input type="hidden" name="NOX" value="0.8">
+      <input type="hidden" name="RM" value="1">
+      <input type="number" step="any" name="AGE" placeholder="Age of Building (AGE, eg: 44)" required>
+      <input type="hidden" name="DIS" value="4">
+      <input type="hidden" name="RAD" value="1.0">
+      <input type="hidden" name="TAX" value="2.0">
+      <input type="hidden" name="PTRATIO" value="1.0">
+      <input type="hidden" name="B" value="236.0">
+      <input type="hidden" name="LSTAT" value="2.0">
+      
+      <button type="submit" class="button">Predict Now</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="prediction-card">
+      <h2>{{ prediction_text }}</h2>
     </div>
+    {% endif %}
+  </div>
 </body>
 </html>

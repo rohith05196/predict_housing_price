@@ -1,6 +1,16 @@
-FROM python:3.7
+FROM python:3.12-alpine
+RUN apk add --no-cache --virtual .build-deps \
+    build-base \
+    gcc \
+    g++ \
+    musl-dev \
+    python3-dev \
+    py3-pip \
+    libffi-dev \
+    lapack-dev \
+    blas-dev \
+    openblas-dev
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-EXPOSE $PORT
-CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+CMD python app.py

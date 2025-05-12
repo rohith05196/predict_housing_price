@@ -44,8 +44,8 @@ This repository contains a machine learning-powered Flask web application that p
 
 2. **Create a virtual environment**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   conda create --name housepred python=3.9
+   conda activate housepred
    ```
 
 3. **Install dependencies**
